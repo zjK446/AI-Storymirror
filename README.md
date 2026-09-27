@@ -1,2 +1,18 @@
-# AI-Storymirror
-Enter the poem, or the poet's life story you want to know, and you can vividly show the corresponding historical scenes and character stories, turning the words that remain on paper into a vivid plot
+# AI-Storymirror (AI故事镜)
+
+本项目是 Vibe Coding 作业，参考《数智文言》方向。不同于传统的静态翻译，本软件利用AI生成“沉浸式电影场景”，再现诗人创作时的历史瞬间。
+
+## 🌟 核心功能
+1. **电影分镜**：输入诗句，AI自动拆解为3个电影场景。
+2. **沉浸式体验**：像看《长安三万里》一样，感受诗句背后的历史情境。
+3. **水墨美学**：深色电影感UI，水墨风格画面占位。
+
+## 🛠️ 技术栈与AI工具使用
+- **前端界面**：HTML + CSS + JavaScript（自研/由ChatGPT生成）
+- **AI 提示词设计**：ChatGPT
+- **灵感参考**：电影《长安三万里》
+
+## 🚀 使用方法
+1. 下载本仓库的 `index.html`。
+2. 在手机或电脑浏览器中打开。
+3. 输入任意诗句，即可体验AI故事再现。
