@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI故事镜 - 诗词沉浸式再现</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "KaiTi", "STKaiti", "Songti SC", serif; }
+        body { background: #121212; color: #e0d8c8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .header { text-align: center; margin-bottom: 20px; margin-top: 20px; }
+        .header h1 { font-size: 28px; letter-spacing: 4px; color: #d4af37; margin-bottom: 8px; }
+        .header p { font-size: 13px; color: #888; letter-spacing: 2px; }
+        .input-section { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+        input { padding: 15px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 16px; outline: none; text-align: center; }
+        input:focus { border-color: #d4af37; }
+        button { padding: 15px; border-radius: 8px; border: none; background: linear-gradient(135deg, #8b0000, #b22222); color: #fff; font-size: 18px; letter-spacing: 4px; cursor: pointer; transition: 0.3s; }
+        button:active { transform: scale(0.98); }
+        .loading { display: none; color: #d4af37; text-align: center; margin: 20px 0; font-style: italic; }
+        
+        /* 电影卡片样式 */
+        .scene-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 20px; }
+        .scene-card { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #333; animation: fadeIn 1s ease forwards; opacity: 0; }
+        .scene-image { height: 180px; background: linear-gradient(45deg, #2c2c2c, #1a1a1a); display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #333; color: #555; font-size: 14px; }
+        .scene-content { padding: 20px; }
+        .scene-title { color: #d4af37; font-size: 18px; margin-bottom: 10px; font-weight: bold; border-left: 3px solid #8b0000; padding-left: 10px; }
+        .scene-text { font-size: 15px; line-height: 1.8; color: #bbb; text-align: justify; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AI故事镜</h1>
+        <p>输入诗句 · 再现长安风华</p>
+    </div>
+
+    <div class="input-section">
+        <input type="text" id="poemInput" placeholder="请输入一句古诗，如：举头望明月">
+        <button onclick="generateStory()">沉 浸 式 再 现</button>
+    </div>
+
+    <div class="loading" id="loading">正在施展 AI 魔法，编织历史场景...</div>
+    <div class="scene-container" id="sceneContainer"></div>
+
+    <script>
+        // 模拟 AI 生成的场景数据（方便你直接演示，不用接API）
+        const mockScenes = {
+            "举头望明月": [
+                { title: "场景一：长安客栈", desc: "夜深人静，月光如水洒在雕花窗棂上。李白独坐榻边，手中提着半壶残酒，抬头望向夜空中那一轮孤月。画面渐变为水墨风格，仿佛能听见远处的打更声。" },
+                { title: "场景二：家乡遥望", desc: "月光拉长了他的影子。他想起故乡江油的山水，想起年少时仗剑去国的壮志。画面里，不仅有孤独，还有大唐诗人特有的浪漫与傲骨。" },
+                { title: "场景三：诗意定格", desc: "他提笔挥毫，写下‘举头望明月，低头思故乡’。镜头缓缓拉远，整个长安城笼罩在银色的月光下，千年后的我们，依然能透过这十个字，感受到那一夜的凉意与乡愁。" }
+            ],
+            "春眠不觉晓": [
+                { title: "场景一：晨光熹微", desc: "春日的清晨，光线柔和地透入卧室。孟浩然在沉睡中渐渐苏醒，窗外传来阵阵鸟鸣，如同一首自然的交响乐。" },
+                { title: "场景二：落花满地", desc: "他推开窗，昨夜的风雨打落了满树繁花。空气中弥漫着泥土和落花的清香，他不禁感叹生命的短暂与美好。" },
+                { title: "场景三：千古绝唱", desc: "没有繁复的辞藻，只有一颗宁静的诗心。他将此刻的心情化作《春晓》，定格了那个美好的春天早晨。" }
+            ]
+        };
+
+        function generateStory() {
+            const inputVal = document.getElementById('poemInput').value.trim();
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('sceneContainer');
+            
+            if (!inputVal) { alert("请输入一句古诗哦！"); return; }
+
+            // 显示加载动画
+            container.innerHTML = '';
+            loading.style.display = 'block';
+
+            // 模拟AI思考的时间
+            setTimeout(() => {
+                loading.style.display = 'none';
+                
+                // 获取预设场景，如果没有预设，就生成一个通用场景
+                const scenes = mockScenes[inputVal] || [
+                    { title: "场景一：意境初现", desc: `画面渐渐聚焦。伴随着“${inputVal}”这句诗，水墨晕染开来，原本留在纸上的文字，正在变成生动的画面。` },
+                    { title: "场景二：跨越时空", desc: "诗人的身影在画面中浮现。我们将跟随他的视角，看他所看，感他所感，体会那段被历史尘封的岁月。" },
+                    { title: "场景三：余音绕梁", desc: `画面定格，故事却还在延续。通过AI的再现，“${inputVal}”不再只是翻译，而是你我都能身临其境的一场电影。` }
+                ];
+
+                // 渲染卡片
+                scenes.forEach((scene, index) => {
+                    setTimeout(() => {
+                        const card = document.createElement('div');
+                        card.className = 'scene-card';
+                        card.innerHTML = `
+                            <div class="scene-image">[ AI 生成的电影画面占位 ]</div>
+                            <div class="scene-content">
+                                <div class="scene-title">${scene.title}</div>
+                                <div class="scene-text">${scene.desc}</div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }, index * 300); // 依次出现的效果
+                });
+
+            }, 1500); // 1.5秒的加载延迟
+        }
+    </script>
+</body>
+</html>
